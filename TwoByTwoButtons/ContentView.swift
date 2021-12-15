@@ -14,7 +14,7 @@ struct ContentView: View {
             Section("iOS13+") {
                 IOS13_TwoByTwoButtonsView()
             }
-
+            
             Section("iOS14+") {
                 IOS14_TwoByTwoButtonsView()
             }
@@ -26,12 +26,12 @@ struct ContentView: View {
 // MARK: ButtonType
 enum ButtonType: CaseIterable, Identifiable {
     var id: Int { self.hashValue }
-
+    
     case a
     case b
     case c
     case d
-
+    
     var text: String {
         switch self {
         case .a:
@@ -44,7 +44,7 @@ enum ButtonType: CaseIterable, Identifiable {
             return "DDDDDDDDDDDDDDD"
         }
     }
-
+    
     var color: Color {
         switch self {
         case .a:
@@ -57,7 +57,7 @@ enum ButtonType: CaseIterable, Identifiable {
             return .cyan
         }
     }
-
+    
     var icon: Image {
         switch self {
         case .a:
@@ -80,45 +80,45 @@ struct IOS13_TwoByTwoButtonsView: View {
                 Button(action: {}) {
                     ButtonContentView(type: .a)
                 }
-
+                
                 Button(action: {}) {
                     ButtonContentView(type: .b)
                 }
             }
-
+            
             HStack {
                 Button(action: {}) {
                     ButtonContentView(type: .c)
                 }
-
+                
                 Button(action: {}) {
                     ButtonContentView(type: .d)
                 }
             }
         }
     }
-
+    
     private struct ButtonContentView: View {
         let type: ButtonType
-
+        
         var body: some View {
             HStack {
                 type.icon
                     .resizable()
                     .frame(width: 20, height: 20)
-
+                
                 Text(type.text)
                     .font(.headline)
                     .minimumScaleFactor(0.9)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .multilineTextAlignment(.leading)
-
+                
             }
             .frame(maxWidth: .infinity, minHeight: 50, maxHeight: 50)
             .padding(.horizontal, 8)
             .background(
-                RoundedRectangle(cornerRadius: 4)
-                    .fill(type.color)
+                type.color
+                    .clipShape(RoundedRectangle(cornerRadius: 4))
                     .shadow(color: .gray, radius: 2, x: .zero, y: 2)
             )
         }
@@ -131,7 +131,7 @@ struct IOS14_TwoByTwoButtonsView: View  {
         .init(.flexible(minimum: 100, maximum: .infinity)),
         .init(.flexible(minimum: 100, maximum: .infinity)),
     ]
-
+    
     var body: some View {
         LazyVGrid(columns: gridLayout) {
             ForEach(ButtonType.allCases) { type in
@@ -140,22 +140,22 @@ struct IOS14_TwoByTwoButtonsView: View  {
                         type.icon
                             .resizable()
                             .frame(width: 20, height: 20)
-
+                        
                         Text(type.text)
                             .font(.headline)
                             .minimumScaleFactor(0.9)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .multilineTextAlignment(.leading)
-
+                        
                     }
-                    .frame(minHeight: 50, maxHeight: 50)
                     .padding(.horizontal, 8)
-                    .background(
-                        RoundedRectangle(cornerRadius: 4)
-                            .fill(type.color)
-                            .shadow(color: .gray, radius: 2, x: .zero, y: 2)
-                    )
                 }
+                .frame(height: 50)
+                .background(
+                    type.color
+                        .clipShape(RoundedRectangle(cornerRadius: 4))
+                        .shadow(color: .gray, radius: 2, x: .zero, y: 2)
+                )
             }
         }
     }
