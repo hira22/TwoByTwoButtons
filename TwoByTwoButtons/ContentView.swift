@@ -128,8 +128,8 @@ struct IOS13_TwoByTwoButtonsView: View {
 // MARK: IOS14_TwoByTwoButtonsView
 struct IOS14_TwoByTwoButtonsView: View  {
     let gridLayout: [GridItem] = [
-        .init(.flexible(minimum: 100, maximum: .infinity)),
-        .init(.flexible(minimum: 100, maximum: .infinity)),
+        .init(.flexible()),
+        .init(.flexible()),
     ]
     
     var body: some View {
